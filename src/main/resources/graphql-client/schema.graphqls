@@ -1,0 +1,59 @@
+type Vacancy {
+    id: ID!
+    title: String!
+    text: String!
+    jobName: String!
+    contactNumber: String
+    salary: Float
+    createdAt: String!
+    authorFullName: String!
+}
+
+type VacancyPage {
+    content: [Vacancy!]!
+    pageNumber: Int!
+    pageSize: Int!
+    totalElements: Int!
+    totalPages: Int!
+    last: Boolean!
+}
+
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    featuredJobs: [String!]!
+    createdVacancies: [Vacancy!]!
+}
+
+type Query {
+    userById(id: ID!): User
+
+    vacancyById(id: ID!): Vacancy
+    vacanciesPage(jobName: String, page: Int = 0, size: Int = 10): VacancyPage
+}
+
+input VacancyInput {
+    title: String!
+    text: String!
+    jobName: String!
+    contactNumber: String
+    salary: Float
+    authorId: ID!
+}
+
+input UserInput {
+    firstName: String!
+    lastName: String!
+    featuredJobs: [String!]
+}
+
+type Mutation {
+    createUser(input: UserInput!): User
+    updateUser(id: ID!, input: UserInput!): User
+    deleteUser(id: ID!): ID
+
+    createVacancy(input: VacancyInput!): Vacancy
+    updateVacancy(id: ID!, input: VacancyInput!): Vacancy
+    deleteVacancy(id: ID!): ID
+}

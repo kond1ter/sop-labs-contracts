@@ -10,7 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "users", description = "API для работы с пользователями")
@@ -24,7 +26,7 @@ public interface UserApi {
                     content = @Content(schema = @Schema(implementation = StatusResponse.class)))
     })
     @GetMapping("/{id}")
-    UserResponse getUserById(@PathVariable("id") Long id);
+    EntityModel<UserResponse> getUserById(@PathVariable("id") Long id);
 
     @Operation(summary = "Создать нового пользователя")
     @ApiResponses(value = {
@@ -34,7 +36,7 @@ public interface UserApi {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    UserResponse createUser(@Valid @RequestBody UserRequest request);
+    ResponseEntity<EntityModel<UserResponse>> createUser(@Valid @RequestBody UserRequest request);
 
     @Operation(summary = "Обновить пользователя")
     @ApiResponses(value = {
@@ -43,7 +45,7 @@ public interface UserApi {
                     content = @Content(schema = @Schema(implementation = StatusResponse.class)))
     })
     @PutMapping("/{id}")
-    UserResponse updateUser(@PathVariable Long id, @Valid @RequestBody UserRequest request);
+    EntityModel<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequest request);
 
     @Operation(summary = "Удалить пользователя")
     @ApiResponses(value = {

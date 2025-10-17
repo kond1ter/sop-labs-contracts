@@ -9,8 +9,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "vacancies", description = "API для работы с вакансиями")
 @RequestMapping("/api/vacancies")
@@ -23,12 +28,13 @@ public interface VacancyApi {
                     content = @Content(schema = @Schema(implementation = StatusResponse.class)))
     })
     @GetMapping("/{id}")
-    VacancyResponse getVacancyById(@PathVariable("id") Long id);
+    EntityModel<VacancyResponse> getVacancyById(@PathVariable("id") Long id);
 
     @Operation(summary = "Получить список всех вакансий с фильтрацией и пагинацией")
-    @ApiResponse(responseCode = "200", description = "Список книг")
+    @ApiResponse(responseCode = "200", description = "Список вакансий")
     @GetMapping
-    PagedResponse<VacancyResponse> getAllVacancies(
+    PagedModel<EntityModel<VacancyResponse>> getAllVacancies(
+            @Parameter(description = "Название профессии") @RequestParam(defaultValue = "") int jobName,
             @Parameter(description = "Номер страницы (0..N)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Размер страницы") @RequestParam(defaultValue = "10") int size
     );
@@ -41,7 +47,7 @@ public interface VacancyApi {
     })
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    VacancyResponse createVacancy(@Valid @RequestBody VacancyRequest request);
+    ResponseEntity<EntityModel<VacancyResponse>> createVacancy(@Valid @RequestBody VacancyRequest request);
 
     @Operation(summary = "Обновить вакансию")
     @ApiResponses(value = {
@@ -50,7 +56,7 @@ public interface VacancyApi {
                     content = @Content(schema = @Schema(implementation = StatusResponse.class)))
     })
     @PutMapping("/{id}")
-    UserResponse updateVacancy(@PathVariable Long id, @Valid @RequestBody VacancyRequest request);
+    EntityModel<VacancyResponse> updateVacancy(@PathVariable Long id, @Valid @RequestBody VacancyRequest request);
 
     @Operation(summary = "Удалить вакансию")
     @ApiResponses(value = {
