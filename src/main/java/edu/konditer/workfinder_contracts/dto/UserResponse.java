@@ -4,6 +4,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Relation(collectionRelation = "users", itemRelation = "user")
@@ -12,10 +13,10 @@ public class UserResponse extends RepresentationModel<UserResponse> {
     private final Long id;
     private final String firstName;
     private final String lastName;
-    private final String[] featuredJobs;
-    private final VacancyResponse[] createdVacancies;
+    private final List<String> featuredJobs;
+    private final List<VacancyResponse> createdVacancies;
 
-    public UserResponse(Long id, String firstName, String lastName, String[] featuredJobs, VacancyResponse[] createdVacancies) {
+    public UserResponse(Long id, String firstName, String lastName, List<String> featuredJobs, List<VacancyResponse> createdVacancies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,11 +36,11 @@ public class UserResponse extends RepresentationModel<UserResponse> {
         return lastName;
     }
 
-    public String[] getFeaturedJobs() {
+    public List<String> getFeaturedJobs() {
         return featuredJobs;
     }
 
-    public VacancyResponse[] getCreatedVacancies() {
+    public List<VacancyResponse> getCreatedVacancies() {
         return createdVacancies;
     }
 
@@ -52,8 +53,8 @@ public class UserResponse extends RepresentationModel<UserResponse> {
         return Objects.equals(id, that.id)
                 && Objects.equals(firstName, that.firstName)
                 && Objects.equals(lastName, that.lastName)
-                && Arrays.equals(featuredJobs, that.featuredJobs)
-                && Arrays.equals(createdVacancies, that.createdVacancies);
+                && Arrays.equals(featuredJobs.toArray(), that.featuredJobs.toArray())
+                && Arrays.equals(createdVacancies.toArray(), that.createdVacancies.toArray());
     }
 
     @Override
@@ -63,8 +64,8 @@ public class UserResponse extends RepresentationModel<UserResponse> {
                 id,
                 firstName,
                 lastName,
-                Arrays.hashCode(featuredJobs),
-                Arrays.hashCode(createdVacancies)
+                Arrays.hashCode(featuredJobs.toArray()),
+                Arrays.hashCode(createdVacancies.toArray())
         );
     }
 }
