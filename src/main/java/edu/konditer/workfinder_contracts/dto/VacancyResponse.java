@@ -14,9 +14,9 @@ public class VacancyResponse extends RepresentationModel<VacancyResponse> {
     private final String contactNumber;
     private final Double salary;
     private final LocalDateTime createdAt;
-    private final String authorFullName;
+    private final UserResponse author;
 
-    public VacancyResponse(Long id, String title, String text, String jobName, String contactNumber, Double salary, LocalDateTime createdAt, String authorFullName) {
+    public VacancyResponse(Long id, String title, String text, String jobName, String contactNumber, Double salary, LocalDateTime createdAt, UserResponse author) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -24,7 +24,7 @@ public class VacancyResponse extends RepresentationModel<VacancyResponse> {
         this.contactNumber = contactNumber;
         this.salary = salary;
         this.createdAt = createdAt;
-        this.authorFullName = authorFullName;
+        this.author = author;
     }
 
     public Long getId() {
@@ -55,8 +55,8 @@ public class VacancyResponse extends RepresentationModel<VacancyResponse> {
         return createdAt;
     }
 
-    public String getAuthorFullName() {
-        return authorFullName;
+    public UserResponse getAuthor() {
+        return author;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class VacancyResponse extends RepresentationModel<VacancyResponse> {
                 && Objects.equals(contactNumber, that.contactNumber)
                 && Objects.equals(salary, that.salary)
                 && Objects.equals(createdAt, that.createdAt)
-                && Objects.equals(authorFullName, that.authorFullName);
+                && Objects.equals(author, that.author);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class VacancyResponse extends RepresentationModel<VacancyResponse> {
                 contactNumber,
                 salary,
                 createdAt,
-                authorFullName
+                author
         );
     }
 }

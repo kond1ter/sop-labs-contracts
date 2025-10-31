@@ -14,14 +14,12 @@ public class UserResponse extends RepresentationModel<UserResponse> {
     private final String firstName;
     private final String lastName;
     private final List<String> featuredJobs;
-    private final List<VacancyResponse> createdVacancies;
 
-    public UserResponse(Long id, String firstName, String lastName, List<String> featuredJobs, List<VacancyResponse> createdVacancies) {
+    public UserResponse(Long id, String firstName, String lastName, List<String> featuredJobs) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.featuredJobs = featuredJobs;
-        this.createdVacancies = createdVacancies;
     }
 
     public Long getId() {
@@ -40,10 +38,6 @@ public class UserResponse extends RepresentationModel<UserResponse> {
         return featuredJobs;
     }
 
-    public List<VacancyResponse> getCreatedVacancies() {
-        return createdVacancies;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,8 +47,7 @@ public class UserResponse extends RepresentationModel<UserResponse> {
         return Objects.equals(id, that.id)
                 && Objects.equals(firstName, that.firstName)
                 && Objects.equals(lastName, that.lastName)
-                && Arrays.equals(featuredJobs.toArray(), that.featuredJobs.toArray())
-                && Arrays.equals(createdVacancies.toArray(), that.createdVacancies.toArray());
+                && Arrays.equals(featuredJobs.toArray(), that.featuredJobs.toArray());
     }
 
     @Override
@@ -64,8 +57,7 @@ public class UserResponse extends RepresentationModel<UserResponse> {
                 id,
                 firstName,
                 lastName,
-                Arrays.hashCode(featuredJobs.toArray()),
-                Arrays.hashCode(createdVacancies.toArray())
+                Arrays.hashCode(featuredJobs.toArray())
         );
     }
 }

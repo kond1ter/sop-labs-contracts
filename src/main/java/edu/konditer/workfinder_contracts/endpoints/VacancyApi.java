@@ -34,7 +34,7 @@ public interface VacancyApi {
     @ApiResponse(responseCode = "200", description = "Список вакансий")
     @GetMapping
     PagedModel<EntityModel<VacancyResponse>> getAllVacancies(
-            @Parameter(description = "Название профессии") @RequestParam(defaultValue = "") int jobName,
+            @Parameter(description = "ID пользователя") @RequestParam(required = false) Long userId,
             @Parameter(description = "Номер страницы (0..N)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Размер страницы") @RequestParam(defaultValue = "10") int size
     );
